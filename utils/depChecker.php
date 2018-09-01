@@ -1,4 +1,6 @@
 <?php
+error_reporting(-1);
+ini_set('display_errors', 1);
 
 include_once 'repoHelper.php';
 
@@ -6,13 +8,10 @@ include_once 'repoHelper.php';
  * Файлик для проверки зависимостей всех пакетов
  */
 
-/**
- * Где искать пакеты
- */
-$path = dirname(__DIR__).DIRECTORY_SEPARATOR.'packages';
 
+loadReposConfig();
 foreach($reposConfig as $repo){
-	search($repo['packages']);
+	search(REPOS_PATH.DIRECTORY_SEPARATOR.$repo['packages']);
 }
 
 /**
@@ -55,6 +54,5 @@ function doCheck($jsonPath){
 }
 
 function cutPath($fullPath){
-    global $path;
-    return substr($fullPath,strlen($path));
+    return str_replace("/",DIRECTORY_SEPARATOR,substr($fullPath,strlen(REPOS_PATH)));
 }
