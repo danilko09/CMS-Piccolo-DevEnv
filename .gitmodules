@@ -1,0 +1,3 @@
+[submodule "repos/CMS-Piccolo"]
+	path = repos/CMS-Piccolo
+	url = https://github.com/danilko09/CMS-Piccolo
