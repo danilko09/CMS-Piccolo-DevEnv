@@ -1,5 +1,7 @@
 <?php
 
+include_once 'repoHelper.php';
+
 /**
  * Файлик для проверки зависимостей всех пакетов
  */
@@ -40,7 +42,7 @@ function doCheck($jsonPath){
     if(isset($json['requires'])){
         foreach($json['requires'] as $pack){
             echo $pack.' ';
-            echo file_exists($path.DIRECTORY_SEPARATOR.str_replace('/', DIRECTORY_SEPARATOR, $pack).DIRECTORY_SEPARATOR.'package.json') ?
+            echo findPackage($pack) != null ?
                     '<font color="green">OK</font>' : '<font color="red">FAIL</font>';
             echo '<br/>';
         }

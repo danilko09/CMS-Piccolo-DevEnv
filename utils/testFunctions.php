@@ -1,13 +1,31 @@
 <?php
 
-function testLog($msg){
-    echo htmlspecialchars($msg).'<br/>';
+include_once 'repoHelper.php';
+
+
+/**
+	Добавляет сообщение в лог теста
+*/
+function testLog($msg, $level = 'info'){
+	if($level == 'error'){
+		echo '<font color="red">'.htmlspecialchars($msg).'</font><br/>';
+	}else{
+		echo htmlspecialchars($msg).'<br/>';
+	}
 }
 
+/**
+	Подгружает классы пакета и его зависимостей
+*/
 function loadPackageClasses($package){
     
-    $repoPath = dirname(__DIR__).DIRECTORY_SEPARATOR.'packages';
-    $packagePath = $repoPath.DIRECTORY_SEPARATOR.str_replace("/", DIRECTORY_SEPARATOR, $package);
+	$packagePath = findPackage($package);
+	
+	if($packagePath == null){
+		testLog("Unable to load classes for '$package': package not found!", "error");
+		return;
+	}
+	
     $packageInfo = json_decode(file_get_contents($packagePath.DIRECTORY_SEPARATOR.'package.json'), true);
     
     if(isset($packageInfo['requires'])){
