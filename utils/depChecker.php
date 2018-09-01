@@ -11,7 +11,9 @@ include_once 'repoHelper.php';
  */
 $path = dirname(__DIR__).DIRECTORY_SEPARATOR.'packages';
 
-search($path);
+foreach($reposConfig as $repo){
+	search($repo['packages']);
+}
 
 /**
  * Перебирает папки в $path, ищет все package.json и отправляет их на проверку

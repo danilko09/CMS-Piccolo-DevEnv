@@ -1,3 +1,4 @@
 [
-	"CMS-Piccolo/packages"
+	{"packages":"CMS-Piccolo/packages",
+		"tests":"CMS-Piccolo/tests"}
 ]
