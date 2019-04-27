@@ -22,6 +22,24 @@ function findPackage($package){
 }
 
 /**
+ * 	Возвращает путь до репозитория, в котором имеется искомый пакет
+ * 	@return Не нашел - null, нашел - путь до папки репозитория
+ */
+function getPackageRepo($package){
+	global $reposConfig;
+	loadReposConfig();
+	
+	foreach($reposConfig as $repo){
+		$path = REPOS_PATH.DIRECTORY_SEPARATOR.$repo['packages'].DIRECTORY_SEPARATOR.str_replace('/', DIRECTORY_SEPARATOR, $package);
+		if(file_exists($path.DIRECTORY_SEPARATOR.'package.json')){
+			return REPOS_PATH.DIRECTORY_SEPARATOR.$repo['packages'];
+		}
+	}
+	
+	return null;
+}
+
+/**
 	Подгружает конфигу репозиториев
 */
 function loadReposConfig(){

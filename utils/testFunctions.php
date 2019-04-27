@@ -40,7 +40,19 @@ function loadPackageClasses($package){
     testLog("Loading classes for '$package'");    
     foreach($packageInfo['classes'] ?? [] as $class){
         testLog($class['file_in']);
-        include $packagePath.DIRECTORY_SEPARATOR.$class['file_in'];
+        include_once $packagePath.DIRECTORY_SEPARATOR.$class['file_in'];
     }
     testLog("");
+}
+
+/**
+ * 	Деплоит пакет и его зависимости имеющимся в 
+ * 	репозитории установщиком во временную папку
+ */
+function deployPackage($package){
+	if(!class_exists("danilko09\\packages\\VersionControl"))
+		loadPackageClasses("base/packages/installer");
+
+	testLog("Deploying package ".$package);
+	\danilko09\packages\Installer::installPackage(getPackageRepo($package), $package);
 }
