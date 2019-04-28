@@ -53,6 +53,12 @@ function deployPackage($package){
 	if(!class_exists("danilko09\\packages\\VersionControl"))
 		loadPackageClasses("base/packages/installer");
 
+	testLog("Looking for package $package for delpoyment");
+	$repo = getPackageRepo($package);
+	if(is_null($repo)){
+		throw new Exception("Unable to deploy: package $package not found");
+	}	
 	testLog("Deploying package ".$package);
-	\danilko09\packages\Installer::installPackage(getPackageRepo($package), $package);
+	\danilko09\packages\Installer::installPackage($repo, $package);
+	testLog("");
 }
