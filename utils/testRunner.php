@@ -16,16 +16,20 @@ loadReposConfig();
 	}
 
 	function printEntry($entry){
-		global $dir;
+		global $dir, $reposConfig;
 		$prefix = $dir == "" ? "" : $dir."/";        
 			if($entry == '..' && $dir != ""){
 				$dirname = dirname($dir);
 				if($dirname != '.'){
-					echo "<a href='?dir=".urldecode($dirname)."'>$entry</a><br/>";
+					$isRepo = false;
+					foreach($reposConfig as $repo){
+						if($repo['tests'] == $dir) $isRepo = true;
+					}
+					echo "<a href='?dir=".($isRepo ? "" : urldecode($dirname))."'>$entry</a><br/>";
 				}else{
 					echo "<a href='?'>$entry</a><br/>";
 				}
-			}elseif(is_dir(REPOS_PATH.DIRECTORY_SEPARATOR.$entry) && $entry != '..'){
+			}elseif(is_dir(REPOS_PATH.DIRECTORY_SEPARATOR.$prefix.$entry) && $entry != '..'){
 				echo "<a href='?dir=".urldecode($prefix.$entry)."'>$entry</a><br/>";
 			} elseif(is_file(REPOS_PATH.DIRECTORY_SEPARATOR.$prefix.$entry)) {
 				?>
